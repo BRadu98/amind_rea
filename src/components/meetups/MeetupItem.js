@@ -5,15 +5,15 @@ import FavoritesContext from '../store/favorites-context'
 
 const MeetupItem = ({id,image,title,address,description}) => {
 
-  const favoritesCtx = useContext(FavoritesContext)
+  const {itemIsFavorite, removeFavorite, addFavorite} = useContext(FavoritesContext)
 
-  const itemIsFavorite = favoritesCtx.itemIsFavorite(id)
+  const itemStatusIsFavorite = itemIsFavorite(id)
 
   const toggleFavoriteHandler = () => {
-    if(itemIsFavorite) {
-      favoritesCtx.removeFavorite(id)
+    if(itemStatusIsFavorite) {
+      removeFavorite(id)
     } else {
-      favoritesCtx.addFavorite({
+      addFavorite({
         id: id,
         title: title,
         description: description,
@@ -34,7 +34,7 @@ const MeetupItem = ({id,image,title,address,description}) => {
           <p>{description}</p>
         </div>
         <div className={classes.actions}>
-          <button onClick={toggleFavoriteHandler}>{itemIsFavorite ? 'Remove from Favorites' : 'To Favorites'}</button>
+          <button onClick={toggleFavoriteHandler}>{itemStatusIsFavorite ? 'Remove from Favorites' : 'To Favorites'}</button>
         </div>
       </Card>
     </li>
